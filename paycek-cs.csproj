@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>PaycekNS</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <PackageId>Paycek</PackageId>
+    <Version>1.1.0</Version>
+    <Authors>electrocoin</Authors>
+    <Company>Electrocoin d.o.o.</Company>
+    <Description>A connector library for communicating with PayCek public API</Description>
+
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <PackageProjectUrl>https://paycek.io</PackageProjectUrl>
+
+    <RepositoryUrl>https://github.com/electrocoin-eu/paycek-cs.git</RepositoryUrl> 
+    <RepositoryType>git</RepositoryType> 
+
+    <PackageTags>Paycek Cryptocurrency Bitcoin Ether Payment Cryptopayment Exchange</PackageTags>
+
+    <Copyright>2023 Electrocoin d.o.o.</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BouncyCastle" Version="1.8.9" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <None Include="LICENSE" Pack="true" PackagePath=""/>
+    <None Include="README.md" Pack="true" PackagePath="/"/>
+  </ItemGroup>
+
+</Project>
