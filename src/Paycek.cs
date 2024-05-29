@@ -103,10 +103,17 @@ namespace PaycekNS
         /// <returns>True if the generated mac digest is equal to the one received in headers, False otherwise</returns>
         public bool CheckHeaders(NameValueCollection headers, string endpoint, string bodyString, string httpMethod = "GET", string contentType = "")
         {
-            Dictionary<string, string> headersLower = headers.AllKeys.ToDictionary(key => (key ?? "").ToLower(), key => headers[key] ?? "");
-            string generatedMac = GenerateMacHash(headersLower["apikeyauth-nonce"], endpoint, bodyString, httpMethod, contentType);
+            try
+            {
+                Dictionary<string, string> headersLower = headers.AllKeys.ToDictionary(key => (key ?? "").ToLower(), key => headers[key] ?? "");
+                string generatedMac = GenerateMacHash(headersLower["apikeyauth-nonce"], endpoint, bodyString, httpMethod, contentType);
 
-            return TimingSafeEqual(generatedMac, headersLower["apikeyauth-mac"]);
+                return TimingSafeEqual(generatedMac, headersLower["apikeyauth-mac"]);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private void InsertOptionalFields(Dictionary<string, object> body, Dictionary<string, object>? optionalFields)
