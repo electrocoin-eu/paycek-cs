@@ -166,6 +166,8 @@ namespace PaycekNS
             return ApiCall("payment/get", body);
         }
 
+        /// <param name="profileCode">The profile code for the payment.</param>
+        /// <param name="dstAmount">The amount of the payment.</param>
         /// <param name="optionalFields">
         /// Optional fields:
         /// <para>location_id: string</para>
@@ -182,6 +184,22 @@ namespace PaycekNS
         /// <para>generate_pdf: bool</para>
         /// <para>client_fields: object</para>
         /// </param>
+        /// <remarks>
+        /// You can implement getting payment status in 3 ways:
+        /// <list type="number">
+        /// <item><b>Provide</b> <c>status_url_callback</c> upon opening a payment and receive status updates on your endpoint.</item>
+        /// <item><b>Provide</b> <c>success_url_callback</c> <b>and</b> <c>fail_url_callback</c> upon opening a payment and receive success and fail updates on your endpoints.</item>
+        /// <item><b>Manually poll</b> <c>payment/get</c> to check payment status.</item>
+        /// </list>
+        /// <b>Do not use</b> <c>fail_url</c> <b>and</b> <c>success_url</c> <b>to update payment status in your system. These URLs are used ONLY for redirecting users back to your shop.</b>
+        /// <para><b>Authorization</b></para>
+        /// If you decide to use callbacks, you <b>must check the headers for every callback</b> to ensure they are authorized.
+        /// If a callback doesn't have a valid Authorization header, your server must respond with a <b>401 Unauthorized</b> status. If the callback has a valid Authorization header, your server must respond with a <b>200 OK</b> status.
+        /// <para><b>Integration Testing</b></para>
+        /// In order to ensure system security, on every new payment, an automated integration test will check if your integration is secure.
+        /// An API call with an invalid Authorization header will be made to each of your callback endpoints. If any endpoint returns a status other than 401 for requests with an invalid Authorization header, <b>all ongoing payments will be canceled</b>, and your <b>profile will be blocked</b> to prevent unauthorized transactions. Ensure your endpoints are correctly configured to handle authorization and respond appropriately.
+        /// <para><i>Test profiles won't be blocked even if the response for callbacks with an invalid Authorization header returns an invalid status. The payment will still be canceled.</i></para>
+        /// </remarks>
         public dynamic OpenPayment(string profileCode, string dstAmount, Dictionary<string, object>? optionalFields = null)
         {
             Dictionary<string, object>  body = new Dictionary<string, object>();

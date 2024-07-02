@@ -11,7 +11,7 @@ For in depth information about endpoints, fields and more, read our [API Documen
 Install package from nuget.
 
 ```shell
-dotnet add package Paycek --version 1.1.1
+dotnet add package Paycek --version 1.1.2
 ```
 
 ### Initialization
